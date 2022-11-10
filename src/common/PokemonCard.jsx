@@ -1,12 +1,9 @@
 import React from 'react'
-import "./style.css"
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { PokemonDetailsScreen } from '../Screens/PokemonDetailsScreen';
+import "./style.scss"
+import { Link } from "react-router-dom";
+import { Card, CardHeader, Grid, Typography } from '@mui/material';
 
 export const PokemonCard = ({ pokemonData, loading }) => {
-  // const navigate = useNavigate();
-  
 
   return (
     <>
@@ -16,11 +13,11 @@ export const PokemonCard = ({ pokemonData, loading }) => {
             return (
               <>
                 <Link to={`/pokemondetails/${item.id}`}>
-                  <div className='container' key={index} >
-                    <h3>{item.id}</h3>
+                  <Card sx={{width:'130px', backgroundColor:'#8EC3B0'}} className="container" key={index}>
+                    <Typography>{item.id}</Typography>
                     <img src={item.sprites.front_default} alt="" />
-                    <h3>{item.name}</h3>
-                  </div>
+                    <Typography>{item.name}</Typography>
+                  </Card>
                 </Link>
               </>
             )

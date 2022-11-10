@@ -1,3 +1,4 @@
+import { Box, Card, CardHeader, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { PokemonCard } from '../common/PokemonCard';
@@ -8,7 +9,6 @@ export const PokemonListScreen = () => {
     // const [prevUrl, setPrevUrl] = useState();
     const [pokemonData, setPokemonData] = useState([]);
     const [loading, setLoading] = useState(true);
-    // const [pokeDex, setPokeDex] = useState([]);
 
     const getApiData = async () => {
         setLoading(true);
@@ -36,9 +36,21 @@ export const PokemonListScreen = () => {
     console.log(pokemonData);
 
     useEffect(() => { getApiData() }, [url])
-       return (
+    return (
         <>
-            <PokemonCard pokemonData={pokemonData} loading={loading} />
+            <Card>
+                <CardHeader
+                    sx={{ m: 'auto', backgroundColor: '#9ED5C5', textDecoration: 'underline' }}
+                    title={"Pokemon list"}
+                />
+            </Card>
+            <Box sx={{ overflow:'auto', borderRadius: '10px', backgroundColor: "#BCEAD5", height: '750px', width: 'auto', p: 4, m: '50px' }}>
+                <Grid container sx={{ border: '2px solid Grey', borderRadius: '10px', height: '800px' }}>
+
+                    <PokemonCard pokemonData={pokemonData} loading={loading} />
+                </Grid>
+            </Box>
+
         </>
     )
 }
