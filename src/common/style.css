@@ -1,12 +1,28 @@
-.container{
-    width:300px;
-    background-color: aquamarine;
+.container {
+    width: 300px;
+    background-color: darkcyan;
     border-radius: 1rem;
     padding: 0 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 90px;  
+    height: 90px;
     box-sizing: border-box;
     margin: 20px;
+    text-decoration: none;
+    list-style: none;
 }
+.Details{
+     width: 1000px;
+     height: auto;
+
+    background-color: darkcyan;
+    border-radius: 1rem;
+    padding: 0 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 300px;
+    box-sizing: border-box;
+    margin: 20px;
+ }
