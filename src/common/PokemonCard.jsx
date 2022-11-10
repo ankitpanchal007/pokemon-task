@@ -6,16 +6,7 @@ import { PokemonDetailsScreen } from '../Screens/PokemonDetailsScreen';
 
 export const PokemonCard = ({ pokemonData, loading }) => {
   // const navigate = useNavigate();
-  const handleClick = (item) => {
-    return (
-      <BrowserRouter>
-        <Routes>
-          {/* <Route path="/" element={<Layout />}> */}
-          <Route path="/PokemonDetailsScreen/:id" element={<PokemonDetailsScreen />} />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
+  
 
   return (
     <>
