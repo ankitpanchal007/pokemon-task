@@ -4,19 +4,16 @@ import React, { useEffect, useState } from 'react'
 import { PokemonCard } from '../common/PokemonCard';
 
 export const PokemonListScreen = () => {
-    const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/");
-    // const [nextUrl, setNextUrl] = useState();  // const [prevUrl, setPrevUrl] = useState();
+    const [url, setUrl] = useState(process.env.REACT_APP_API_URL + "/v2/pokemon/");
+
     const [pokemonData, setPokemonData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const getApiData = async () => {
         setLoading(true);
         const Apidata = await axios.get(url);
-        // console.log(Apidata.data.results); // setNextUrl(Apidata.data.next); // console.log(nextUrl);  // setPrevUrl(Apidata.data.previous)
         getPokemon(Apidata.data.results);
-        // console.log(prevUrl)
         setLoading(false);
-        // console.log(pokemonData)
     }
 
     const getPokemon = async (res) => {
@@ -25,12 +22,11 @@ export const PokemonListScreen = () => {
             setPokemonData(state => {
                 state = [...state, result.data]
                 state.sort((a, b) => a.id > b.id ? 1 : -1)
+
                 return state;
             })
         });
     }
-   
-
     useEffect(() => { getApiData() }, [url])
     return (
         <>
@@ -41,9 +37,17 @@ export const PokemonListScreen = () => {
                 />
             </Card>
             <Box sx={{ borderRadius: '10px', backgroundColor: "#BCEAD5", height: '750px', width: 'auto', p: 4, m: '50px' }}>
-                <Grid container sx={{ border: '2px solid Grey', borderRadius: '10px', height: '800px' }}>
-
-                    <PokemonCard pokemonData={pokemonData} loading={loading} />
+                <Grid container sx={{ border: '2px solid Grey', borderRadius: '10px', height: '800px' }} >
+                    {
+                        loading ? <h3>loading..</h3> :
+                            pokemonData.map((item) => {
+                                return (
+                                    <>
+                                        <PokemonCard item={item} />
+                                    </>
+                                )
+                            }
+                            )}
                 </Grid>
             </Box>
 
