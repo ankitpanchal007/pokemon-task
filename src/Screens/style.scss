@@ -1,18 +1,18 @@
 .button {
   background-color: white;
-  color: black;
-  border: 2px solid;
+  // color: black;
+  border: 2px solid #478976;
   height: 35px;
 }
 
 .button:hover {
-  background-color: #008b8b;
+  background-color: #478976;
   color: white;
 }
 
 .ability {
   width: 300px;
-  background-color: cornflowerblue;
+  background-color: #478976;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,7 +23,7 @@
 
 .Details {
   width: auto;
-  background-color: rgb(79, 221, 221);
+  background-color: #478976;
   border-radius: 1rem;
   padding: 0 10rem;
   display: flex;
