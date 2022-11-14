@@ -5,6 +5,7 @@ const pokemonSlice = createSlice({
   initialState: {
     pokemons: [],
     pokemonDetail: {},
+    myPokemons: [],
   },
   reducers: {
     setPokemons: (state, action) => {
@@ -21,9 +22,32 @@ const pokemonSlice = createSlice({
         pokemonDetail: action.payload,
       };
     },
+    setMyPokemons: (state, action) => {
+      return {
+        ...state,
+        myPokemons: state.myPokemons.find((myPk) => myPk.id === action.payload.id)
+          ? [...state.myPokemons]
+          : [...state.myPokemons, action.payload],
+      };
+    },
+    setNickname: (state, action) => {
+      return {
+        ...state,
+        myPokemons: state.myPokemons.find((myPk) => myPk.id === action.payload.id)
+          ? [...state.myPokemons]
+          : [...state.myPokemons, action.payload],
+    };
+    },
+    deletePokemons: (state, action) => {
+      return {
+        ...state,
+        myPokemons: state.myPokemons.filter((myPk) => myPk.id !== action.payload)
+
+      }
+    }
   },
 });
 
-export const { setPokemons, setPokemonDetail } = pokemonSlice.actions;
+export const { setPokemons, setPokemonDetail, setMyPokemons, deletePokemons, setNickname } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

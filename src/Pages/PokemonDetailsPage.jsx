@@ -2,14 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardHeader, Grid, Typography } from "@mui/material";
+import { Button, Card, CardHeader, Dialog, DialogActions, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { MYPOKEMON_LIST } from "../Utils/constants";
+import { setMyPokemons, setNickname } from "../Redux/PokemonSlice";
 
 const PokemonDetailsPage = () => {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
-  console.log("view ", pokemonDetail);
 
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const PokemonDetailsPage = () => {
     navigate("/");
   };
   const navigateToMyPokemon = () => {
-    navigate("/myPokemonList");
+    navigate(MYPOKEMON_LIST);
   };
 
   useEffect(() => {
@@ -28,9 +30,12 @@ const PokemonDetailsPage = () => {
       .then((res) => setData(res.data));
   }, []);
 
-  // const HandleOnClick = (data) => {
-  //   dispatch(getPokemons(data));
-  // }
+  const HandleOnClick = (pokemonDetail) => {
+    // dispatch(setNickname({ nickName: 'abc' }));
+    // localStorage.setItem('NickName', JSON.stringify(pokemonDetail));
+    dispatch(setMyPokemons(pokemonDetail));
+    navigate(MYPOKEMON_LIST);
+  };
 
   return (
     <>
@@ -41,29 +46,29 @@ const PokemonDetailsPage = () => {
         />
 
         <Grid direction={"row"}>
-          <Button className="button" onClick={navigateHome}>
+          <Button variant="contained" className="button" onClick={navigateHome}>
             Move to Pokemon's List
           </Button>
-          <Button className="button" onClick={navigateToMyPokemon}>
+          <Button variant="contained" className="button" onClick={navigateToMyPokemon}>
             My Pokemon List
           </Button>
         </Grid>
 
         <div className="Details">
-          <Typography>{data.id}</Typography>
+          <Typography>{pokemonDetail.id}</Typography>
           <img
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`}
           />
           <Typography sx={{ fontSize: 34, fontWeight: "medium" }}>
-            {data.name}
+            {pokemonDetail.name}
           </Typography>
 
           <div>
-            {data?.stats?.map((pokemon) => {
+            {pokemonDetail?.stats?.map((pokemon) => {
               return (
                 <>
                   <Typography>
-                    {pokemon.stat.name}:{pokemon.base_stat}
+                    {pokemon?.stat?.name}:{pokemon?.base_stat}
                   </Typography>
                 </>
               );
@@ -73,7 +78,7 @@ const PokemonDetailsPage = () => {
 
         <div className="ability">
           <Typography style={{ fontWeight: "bold" }}>ABILITIES</Typography>
-          {data?.abilities?.map((poke) => {
+          {pokemonDetail?.abilities?.map((poke) => {
             return (
               <div>
                 <Typography>{poke.ability.name}</Typography>
@@ -82,12 +87,12 @@ const PokemonDetailsPage = () => {
           })}
         </div>
 
-        {/* <Link to={`/myPokemonList/${data.id}`}> */}
-        {/* <Button className='button' onClick={() => { HandleOnClick() }} >Add to my pokemon list</Button> */}
-        {/* </Link> */}
+        <Button variant="contained" className="button" onClick={() => { HandleOnClick(pokemonDetail); }}  >Add to my pokemon list</Button>
       </Card>
     </>
   );
 };
 
 export default PokemonDetailsPage;
+
+//onClick={() => { HandleOnClick(pokemonDetail); }} 

@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Card, CardHeader, Typography } from "@mui/material";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Button, CardHeader, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePokemons } from "../Redux/PokemonSlice";
 
 const MyPokemonListPage = () => {
-  const detail = useParams();
-  const [myPokemonData, setMyPokemonData] = useState([]);
-  console.log(myPokemonData);
-  //  const { Pokemons } = useSelector((state) => state.Pokemons);
-  // console.log(Pokemons);
 
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL + `/v2/pokemon/${detail.id}`)
-      .then((res) => setMyPokemonData(res.data));
-  }, []);
+const dispatch=useDispatch();
+  const { myPokemons } = useSelector((state) => state.PokemonReducer);
+  console.log(myPokemons);
+  const handleOnDelete=(pokemon)=>{
+    dispatch(deletePokemons(pokemon.id));
+  }
+
   return (
     <>
-      <Card>
-        <CardHeader
-          sx={{ m: "auto", backgroundColor: "#9ED5C5" }}
-          title={"My Pokemon list"}
-        ></CardHeader>
-        <Typography>{myPokemonData.id}</Typography>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${myPokemonData.id}.svg`}
-        />
-        <Typography sx={{ fontSize: 34, fontWeight: "medium" }}>
-          {myPokemonData.name}
-        </Typography>
-      </Card>
+      <CardHeader
+        sx={{ m: "auto", backgroundColor: "#9ED5C5" }}
+        title={"My Pokemon list"}
+      ></CardHeader>
+
+      {myPokemons &&
+        myPokemons.map((pokemon) => {
+          return (
+            <>
+              <Typography>Id:{pokemon.id}</Typography>
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+              />
+              <Typography sx={{ fontSize: 34, fontWeight: "medium" }}>
+                Name:{pokemon.name},{pokemon.nickName}
+              </Typography>
+              <Button variant="contained" sx={{ backgroundColor: "red" }} onClick={()=>{handleOnDelete(pokemon)}}> Remove Pokemon</Button>
+            </>
+          );
+        })}
     </>
   );
 };

@@ -9,9 +9,7 @@ import { POKEMON_DETAILS } from "../Utils/constants";
 
 const PokemonListPage = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const { pokemons } = useSelector((state) => state.PokemonReducer);
 
   useEffect(() => {
@@ -25,16 +23,26 @@ const PokemonListPage = () => {
 
   return (
     <>
-      {pokemons &&
-        pokemons.map((pokemon) => {
-          return (
-            <PokemonCard
-              key={`pokemoncard_${pokemon?.id}`}
-              item={pokemon}
-              onClick={() => handlePokemonOnClick(pokemon)}
-            />
-          );
-        })}
+      <Card>
+        <CardHeader
+          sx={{ m: 'auto', backgroundColor: '#9ED5C5', textDecoration: 'underline' }}
+          title={"Pokemon list"}
+        />
+      </Card>
+      <Box sx={{ borderRadius: '10px', backgroundColor: "#BCEAD5", height: '620px', width: 'auto', p: 4, m: '50px' }}>
+        <Grid container sx={{ border: '2px solid Grey', borderRadius: '10px', height: '600px' }} >
+          {pokemons &&
+            pokemons.map((pokemon) => {
+              return (
+                <PokemonCard
+                  key={`pokemoncard_${pokemon?.id}`}
+                  item={pokemon}
+                  onClick={() => handlePokemonOnClick(pokemon)}
+                />
+              );
+            })}
+        </Grid>
+      </Box>
     </>
   );
 };
