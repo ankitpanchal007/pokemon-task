@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import Reducer from "./Reducer"
+import PokemonReducer from "./PokemonSlice";
 
 export default configureStore({
-    reducer: {
-        Pokemons: Reducer
-    },
+  reducer: {
+    PokemonReducer,
+  },
 });
-
-
