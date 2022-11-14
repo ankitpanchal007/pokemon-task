@@ -4,6 +4,7 @@ const pokemonSlice = createSlice({
   name: "pokemon_slice",
   initialState: {
     pokemons: [],
+    pokemonDetail: {},
   },
   reducers: {
     setPokemons: (state, action) => {
@@ -14,9 +15,15 @@ const pokemonSlice = createSlice({
           : [...state.pokemons, action.payload],
       };
     },
+    setPokemonDetail: (state, action) => {
+      return {
+        ...state,
+        pokemonDetail: action.payload,
+      };
+    },
   },
 });
 
-export const { setPokemons } = pokemonSlice.actions;
+export const { setPokemons, setPokemonDetail } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

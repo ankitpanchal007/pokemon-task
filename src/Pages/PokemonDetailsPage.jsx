@@ -1,11 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardHeader, Grid, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 const PokemonDetailsPage = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
+  console.log("view ", pokemonDetail);
+
   const navigate = useNavigate();
 
   const detail = useParams();

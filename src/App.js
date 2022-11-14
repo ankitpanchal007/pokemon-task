@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   MyPokemonListPage,
@@ -12,14 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PokemonListPage />} />
-          <Route
-            path={`/pokemon-details/:id`}
-            element={<PokemonDetailsPage />}
-          />
-          <Route
-            path={`/my-pokemons-list/:id`}
-            element={<MyPokemonListPage />}
-          />
+          <Route path={`/pokemon-details`} element={<PokemonDetailsPage />} />
+          <Route path={`/my-pokemons-list`} element={<MyPokemonListPage />} />
         </Routes>
       </BrowserRouter>
     </>
