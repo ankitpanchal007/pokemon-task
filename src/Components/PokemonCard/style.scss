@@ -1,11 +1,59 @@
-.pokemon-card {
-    width: 300px;
-    border-radius: 1rem;
-    background-color: #8EC3B0;
-    padding: 0 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100px;
-    margin: 10px;
+.heading {
+  // color: #06283D;
+  text-align: center;
+  background-color: #9ED5C5;
+  
+  .css-1qvr50w-MuiTypography-root {
+    font-weight: bold;
+    font-size: 40px;
+  }
 }
+
+
+.card-container {
+  border: radius 10px;
+  background-color: #478976;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px;
+  border: none;
+  .css-j872wp-MuiGrid-root{
+    border: none;
+  }
+}
+.pokemon-card {
+  width: 347px;
+  border-radius: 1rem;
+  background-color: #A0E4CB !important;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  margin: 10px;
+ 
+}
+
+
+.Details-card {
+  width: auto;
+  background-color: #478976;
+  border-radius: 1rem;
+  padding: 0 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 400px;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.mypokemon-card {
+  display: flex;
+  align-items: center;
+  padding: 0 5rem;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 10px;
+}
+

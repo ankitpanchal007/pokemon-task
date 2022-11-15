@@ -1,65 +1,63 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardHeader, Dialog, DialogActions, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Button, Card, CardHeader, Dialog, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { MYPOKEMON_LIST } from "../Utils/constants";
-import { setMyPokemons, setNickname } from "../Redux/PokemonSlice";
+import { setMyPokemons } from "../Redux/PokemonSlice";
+import sweetalert from 'sweetalert';
 
 const PokemonDetailsPage = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [nickname, setNickname] = useState("");
 
   const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
 
   const navigate = useNavigate();
 
-  const detail = useParams();
-  const [data, setData] = useState({});
-  const navigateHome = () => {
-    navigate("/");
-  };
-  const navigateToMyPokemon = () => {
-    navigate(MYPOKEMON_LIST);
-  };
-
-  useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL + `/v2/pokemon/${detail.id}`)
-      .then((res) => setData(res.data));
-  }, []);
-
   const HandleOnClick = (pokemonDetail) => {
-    // dispatch(setNickname({ nickName: 'abc' }));
-    // localStorage.setItem('NickName', JSON.stringify(pokemonDetail));
-    dispatch(setMyPokemons(pokemonDetail));
-    navigate(MYPOKEMON_LIST);
+    if (nickname.trim().length > 0) {
+      localStorage.setItem("pokemonDetail", JSON.stringify(pokemonDetail));
+      var user = JSON.parse(localStorage.getItem("pokemonDetail"));
+      user.nickname = nickname;
+      dispatch(setMyPokemons(user));
+      navigate(MYPOKEMON_LIST);
+    }
+    else {
+      sweetalert({ title: "Enter nickname", icon: "error" })
+    }
   };
 
+  const showDialog = () => {
+    setOpen(true);
+  };
+
+  const closeDialog = () => {
+    setOpen(false);
+  };
   return (
     <>
-      <Card>
+      <Card sx={{ backgroundColor: "#BCEAD5" }}>
         <CardHeader
-          sx={{ backgroundColor: "#9ED5C5" }}
-          title={"Pokemon Details"}
+          className="heading"
+          title="Pokemon Details"
         />
 
-        <Grid direction={"row"}>
-          <Button variant="contained" className="button" onClick={navigateHome}>
-            Move to Pokemon's List
+        <Grid direction={"row"} >
+          <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} className="button" onClick={() => { navigate("/") }}>
+            Pokemon List
           </Button>
-          <Button variant="contained" className="button" onClick={navigateToMyPokemon}>
+          <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} className="button" onClick={() => { navigate(MYPOKEMON_LIST) }}>
             My Pokemon List
           </Button>
         </Grid>
 
-        <div className="Details">
-          <Typography>{pokemonDetail.id}</Typography>
+        <div className="Details-card">
+          <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "bold" }}>{pokemonDetail.id}</Typography>
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`}
           />
-          <Typography sx={{ fontSize: 34, fontWeight: "medium" }}>
+          <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
             {pokemonDetail.name}
           </Typography>
 
@@ -67,28 +65,42 @@ const PokemonDetailsPage = () => {
             {pokemonDetail?.stats?.map((pokemon) => {
               return (
                 <>
-                  <Typography>
+                  <Typography sx={{ color: '#CFF5E7' }}>
                     {pokemon?.stat?.name}:{pokemon?.base_stat}
                   </Typography>
                 </>
               );
             })}
           </div>
+          <div >
+            <Typography style={{ color: '#CFF5E7', fontWeight: "bold" }}>ABILITIES</Typography>
+            {pokemonDetail?.abilities?.map((poke) => {
+              return (
+
+                <Typography style={{ color: '#CFF5E7' }} >{poke.ability.name}</Typography>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="ability">
-          <Typography style={{ fontWeight: "bold" }}>ABILITIES</Typography>
-          {pokemonDetail?.abilities?.map((poke) => {
-            return (
-              <div>
-                <Typography>{poke.ability.name}</Typography>
-              </div>
-            );
-          })}
-        </div>
-
-        <Button variant="contained" className="button" onClick={() => { HandleOnClick(pokemonDetail); }}  >Add to my pokemon list</Button>
+        <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { showDialog() }}  >Add to my pokemon list</Button>
       </Card>
+      <Dialog
+        sx={{
+          border: '2px solid',
+          justifyContent: 'center',
+          padding: "auto",
+        }}
+        open={open}
+        onClose={() => { closeDialog() }}
+      >
+        <DialogTitle>Enter nickname for selected pokemon</DialogTitle>
+
+        <Grid direction={"row"} sx={{ padding: "25px" }}>
+          <TextField sx={{ width: "100%", mb: 3 }} placeholder="Enter nickname" onChange={e => { setNickname(e.target.value) }}></TextField>
+          <Button variant="contained" sx={{ display: "block", m: "auto", width: "auto", height: "55px" }} onClick={() => { HandleOnClick(pokemonDetail) }}>Ok</Button>
+        </Grid>
+      </Dialog>
     </>
   );
 };

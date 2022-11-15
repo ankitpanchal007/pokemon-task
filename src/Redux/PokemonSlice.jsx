@@ -30,21 +30,13 @@ const pokemonSlice = createSlice({
           : [...state.myPokemons, action.payload],
       };
     },
-    setNickname: (state, action) => {
-      return {
-        ...state,
-        myPokemons: state.myPokemons.find((myPk) => myPk.id === action.payload.id)
-          ? [...state.myPokemons]
-          : [...state.myPokemons, action.payload],
-    };
-    },
     deletePokemons: (state, action) => {
       return {
         ...state,
         myPokemons: state.myPokemons.filter((myPk) => myPk.id !== action.payload)
 
-      }
-    }
+      };
+    },
   },
 });
 

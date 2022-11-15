@@ -12,6 +12,7 @@ export const PokemonCard = ({ item, onClick }) => {
       />
       <Typography className="pokemon-id">{item?.id}</Typography>
       <Typography className="pokemon-name">{item?.name}</Typography>
+
     </Card>
   );
 };
