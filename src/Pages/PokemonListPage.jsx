@@ -33,7 +33,7 @@ const PokemonListPage = () => {
         <Typography>Selected Pokemon List</Typography>
         </Button>
       <Box className="card-container">
-        <Grid container sx={{ border: '2px solid Grey', borderRadius: '10px', height: 'auto' }} >
+        <Grid container sx={{height: 'auto' }} >
           {pokemons &&
             pokemons.map((pokemon) => {
               return (
