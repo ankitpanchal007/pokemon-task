@@ -13,7 +13,6 @@ const PokemonDetailsPage = () => {
   const [nickname, setNickname] = useState("");
 
   const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
-
   const navigate = useNavigate();
 
   const HandleOnClick = (pokemonDetail) => {
@@ -36,28 +35,21 @@ const PokemonDetailsPage = () => {
   const closeDialog = () => {
     setOpen(false);
   };
+
   return (
     <>
-     <Layout title={"Pokemon Details"} button={"Pokemon List"}>
+      <Layout title={"Pokemon Details"}>
 
-        <Grid direction={"row"} >
-          <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} className="button" onClick={() => { navigate("/") }}>
-            Pokemon List
-          </Button>
-          <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} className="button" onClick={() => { navigate(MYPOKEMON_LIST) }}>
-            My Pokemon List
-          </Button>
-        </Grid>
-        
-
-        <div className="Details-card">
+        <div className="Details-card" key={`Details:id${pokemonDetail.id}`}>
           <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "bold" }}>{pokemonDetail.id}</Typography>
-          <img
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`}
-          />
-          <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
-            {pokemonDetail.name}
-          </Typography>
+          <Grid>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`} alt=""
+            />
+             <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
+              {pokemonDetail.name}
+            </Typography>
+          </Grid>
 
           <div>
             {pokemonDetail?.stats?.map((pokemon) => {
@@ -74,7 +66,6 @@ const PokemonDetailsPage = () => {
             <Typography style={{ color: '#CFF5E7', fontWeight: "bold" }}>ABILITIES</Typography>
             {pokemonDetail?.abilities?.map((poke) => {
               return (
-
                 <Typography style={{ color: '#CFF5E7' }} >{poke.ability.name}</Typography>
               );
             })}
@@ -82,28 +73,26 @@ const PokemonDetailsPage = () => {
         </div>
 
         <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { showDialog() }}  >Catch Pokemon</Button>
-      
-      <Dialog
-        sx={{
-          border: '2px solid',
-          justifyContent: 'center',
-          padding: "auto",
-        }}
-        open={open}
-        onClose={() => { closeDialog() }}
-      >
-        <DialogTitle>Enter nickname for Caught pokemon</DialogTitle>
 
-        <Grid direction={"row"} sx={{ padding: "25px" }}>
-          <TextField sx={{ width: "100%", mb: 3 }} placeholder="Enter nickname" onChange={e => { setNickname(e.target.value) }}></TextField>
-          <Button variant="contained" sx={{ display: "block", m: "auto", width: "auto", height: "55px" }} onClick={() => { HandleOnClick(pokemonDetail) }}>Ok</Button>
-        </Grid>
-      </Dialog>
+        <Dialog
+          sx={{
+            border: '2px solid',
+            justifyContent: 'center',
+            padding: "auto",
+          }}
+          open={open}
+          onClose={() => { closeDialog() }}
+        >
+          <DialogTitle>Enter nickname for Caught pokemon</DialogTitle>
+
+          <Grid container direction={"row"} sx={{ padding: "25px" }}>
+            <TextField sx={{ width: "100%", mb: 3 }} placeholder="Enter nickname" onChange={e => { setNickname(e.target.value) }}></TextField>
+            <Button variant="contained" sx={{ display: "block", m: "auto", width: "auto", height: "55px" }} onClick={() => { HandleOnClick(pokemonDetail) }}>Ok</Button>
+          </Grid>
+        </Dialog>
       </Layout>
     </>
   );
 };
 
 export default PokemonDetailsPage;
-
-//onClick={() => { HandleOnClick(pokemonDetail); }} 

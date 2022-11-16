@@ -1,44 +1,22 @@
-.heading {
-  // text-align: center;
-  background-color: #9ED5C5 !important;
-
-  .css-1qvr50w-MuiTypography-root {
-    font-weight: bold;
-    font-size: 35px;
-  }
-}
-
-.card-container {
-  border: radius 10px;
-  background-color: #478976 !important;
-  padding: 10px;
-  border-radius: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-  border: none;
-}
-
 .pokemon-card {
-  width: 347px;
-  // border-radius: 20px !important;
+  width: 190px;
   background-color: #A0E4CB !important;
-  padding: 0 3rem;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
+  height: 150px;
   margin: 10px;
 }
 
 .Details-card {
   width: auto;
-  background-color: #478976;
-  // border-radius: 0rem;
+  background-color: #478976;  
   padding: 0 10rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 400px;
+  height: 500px;
   box-sizing: border-box;
   margin: 10px;
 }
@@ -49,5 +27,6 @@
   padding: 0 5rem;
   justify-content: space-between;
   box-sizing: border-box;
-  margin: 10px;
+  margin: 20px;
+  
 }

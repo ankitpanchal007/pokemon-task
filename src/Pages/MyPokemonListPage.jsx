@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Layout";
 import { deletePokemons } from "../Redux/PokemonSlice";
-import { POKEMON_LIST } from "../Utils/constants";
 
 const MyPokemonListPage = () => {
   const navigate = useNavigate();
@@ -18,17 +17,13 @@ const MyPokemonListPage = () => {
   return (
     <>
       <Card sx={{ backgroundColor: "#BCEAD5" }} >
-        <Layout title={" My Pokemon Page"} button={"Pokemon List"}>
+        <Layout title={"My Pokemon Page"} >
 
-          <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { navigate(POKEMON_LIST) }}>
-            <Typography>
-              Pokemon List
-            </Typography></Button>
           {myPokemons &&
             myPokemons.map((pokemon) => {
               return (
                 <>
-                  <Card className="mypokemon-card " sx={{ backgroundColor: "#478976" }}>
+                  <Card className="mypokemon-card " key={`key:${myPokemons.id}`} sx={{ backgroundColor: "#478976" }}>
                     <Typography sx={{ color: '#DEF5E5', fontSize: 34, fontWeight: "bold" }}>Id - {pokemon.id}</Typography>
                     <img
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
