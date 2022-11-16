@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MYPOKEMON_LIST } from "../Utils/constants";
 import { setMyPokemons } from "../Redux/PokemonSlice";
 import sweetalert from 'sweetalert';
+import Layout from "../Layout";
 
 const PokemonDetailsPage = () => {
   const dispatch = useDispatch();
@@ -37,11 +38,7 @@ const PokemonDetailsPage = () => {
   };
   return (
     <>
-      <Card sx={{ backgroundColor: "#BCEAD5" }}>
-        <CardHeader
-          className="heading"
-          title="Pokemon Details"
-        />
+     <Layout title={"Pokemon Details"} button={"Pokemon List"}>
 
         <Grid direction={"row"} >
           <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} className="button" onClick={() => { navigate("/") }}>
@@ -51,6 +48,7 @@ const PokemonDetailsPage = () => {
             My Pokemon List
           </Button>
         </Grid>
+        
 
         <div className="Details-card">
           <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "bold" }}>{pokemonDetail.id}</Typography>
@@ -83,8 +81,8 @@ const PokemonDetailsPage = () => {
           </div>
         </div>
 
-        <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { showDialog() }}  >Add to my pokemon list</Button>
-      </Card>
+        <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { showDialog() }}  >Catch Pokemon</Button>
+      
       <Dialog
         sx={{
           border: '2px solid',
@@ -94,13 +92,14 @@ const PokemonDetailsPage = () => {
         open={open}
         onClose={() => { closeDialog() }}
       >
-        <DialogTitle>Enter nickname for selected pokemon</DialogTitle>
+        <DialogTitle>Enter nickname for Caught pokemon</DialogTitle>
 
         <Grid direction={"row"} sx={{ padding: "25px" }}>
           <TextField sx={{ width: "100%", mb: 3 }} placeholder="Enter nickname" onChange={e => { setNickname(e.target.value) }}></TextField>
           <Button variant="contained" sx={{ display: "block", m: "auto", width: "auto", height: "55px" }} onClick={() => { HandleOnClick(pokemonDetail) }}>Ok</Button>
         </Grid>
       </Dialog>
+      </Layout>
     </>
   );
 };

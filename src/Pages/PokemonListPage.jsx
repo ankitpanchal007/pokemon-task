@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PokemonCard } from "../Components/PokemonCard/PokemonCard";
+import Layout from "../Layout";
 import { setPokemonDetail } from "../Redux/PokemonSlice";
 import { fetchPokemonsList } from "../Services/Api";
 import { MYPOKEMON_LIST, POKEMON_DETAILS } from "../Utils/constants";
@@ -23,29 +24,28 @@ const PokemonListPage = () => {
 
   return (
     <div>
-      <Card>
-        <CardHeader
-        className="heading"
-          title="Pokemon List"
-        />
-      </Card>
-        <Button variant="contained"  sx={{m:2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} color='success' className='button' onClick={() => navigate(MYPOKEMON_LIST)}> 
-        <Typography>Selected Pokemon List</Typography>
+      <Layout title={"Pokemon Page"} button={"My pokemon List"}>
+        <Button variant="contained"
+          sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }}
+          className='button'
+          onClick={() => navigate(MYPOKEMON_LIST)}>
+          <Typography>My Pokemon List</Typography>
         </Button>
-      <Box className="card-container">
-        <Grid container sx={{height: 'auto' }} >
-          {pokemons &&
-            pokemons.map((pokemon) => {
-              return (
-                <PokemonCard 
-                  key={`pokemoncard_${pokemon?.id}`}
-                  item={pokemon}
-                  onClick={() => handlePokemonOnClick(pokemon)}
-                />
-              );
-            })}
-        </Grid>
-      </Box>
+        <Box className="card-container">
+          <Grid container sx={{ height: 'auto' }} >
+            {pokemons &&
+              pokemons.map((pokemon) => {
+                return (
+                  <PokemonCard
+                    key={`pokemoncard_${pokemon?.id}`}
+                    item={pokemon}
+                    onClick={() => handlePokemonOnClick(pokemon)}
+                  />
+                );
+              })}
+          </Grid>
+        </Box>
+      </Layout>
     </div>
   );
 };

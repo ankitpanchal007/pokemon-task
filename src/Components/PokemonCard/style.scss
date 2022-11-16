@@ -1,31 +1,26 @@
 .heading {
-  // color: #06283D;
-  text-align: center;
-  background-color: #9ED5C5;
-  
+  // text-align: center;
+  background-color: #9ED5C5 !important;
+
   .css-1qvr50w-MuiTypography-root {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 35px;
   }
 }
 
-
 .card-container {
   border: radius 10px;
-  background-color: #478976;
+  background-color: #478976 !important;
   padding: 10px;
   border-radius: 20px;
   margin-left: 10px;
   margin-right: 10px;
-  
   border: none;
-  .css-j872wp-MuiGrid-root{
-    border: none;
-  }
 }
+
 .pokemon-card {
   width: 347px;
-  border-radius: 20px !important;
+  // border-radius: 20px !important;
   background-color: #A0E4CB !important;
   padding: 0 3rem;
   display: flex;
@@ -33,14 +28,12 @@
   justify-content: space-between;
   height: 100px;
   margin: 10px;
- 
 }
-
 
 .Details-card {
   width: auto;
   background-color: #478976;
-  border-radius: 1rem;
+  // border-radius: 0rem;
   padding: 0 10rem;
   display: flex;
   align-items: center;
@@ -58,4 +51,3 @@
   box-sizing: border-box;
   margin: 10px;
 }
-
