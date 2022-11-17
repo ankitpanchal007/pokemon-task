@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardHeader, Dialog, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { MYPOKEMON_LIST } from "../Utils/constants";
 import { setMyPokemons } from "../Redux/PokemonSlice";
 import sweetalert from 'sweetalert';
 import Layout from "../Layout";
+import { fetchPokemonMoves } from "../Services/Api";
 
 const PokemonDetailsPage = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [nickname, setNickname] = useState("");
 
+
   const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
+  useEffect(() => {
+    dispatch(fetchPokemonMoves(pokemonDetail.id));
+  }, []);
+  const { pokemonMove } = useSelector((state) => state.PokemonReducer);
   const navigate = useNavigate();
 
   const HandleOnClick = (pokemonDetail) => {
@@ -40,18 +46,40 @@ const PokemonDetailsPage = () => {
     <>
       <Layout title={"Pokemon Details"}>
 
-        <div className="Details-card" key={`Details:id${pokemonDetail.id}`}>
-          <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "bold" }}>{pokemonDetail.id}</Typography>
+        <Grid container className="Details-card" key={`Details:id${pokemonDetail.id}`}>
+          <Grid>
+            <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "bold" }}>{pokemonDetail.id}</Typography>
+          </Grid>
           <Grid>
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`} alt=""
             />
-             <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
-              {pokemonDetail.name}
-            </Typography>
+            <Grid>
+              <img
+                src={pokemonDetail?.sprites?.back_default} alt=""
+              />
+              <img
+                src={pokemonDetail?.sprites?.back_shiny} alt=""
+              />
+              <img
+                src={pokemonDetail?.sprites?.front_default} alt=""
+              />
+              <img
+                src={pokemonDetail?.sprites?.front_shiny} alt=""
+              />
+            </Grid>
+            <Grid>
+              <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
+                {pokemonDetail.name}
+              </Typography>
+              <Typography sx={{ color: '#CFF5E7', fontSize: 22 }}>
+               Move - {pokemonMove?.name}, Accuracy - {pokemonMove?.accuracy}
+               </Typography>
+            </Grid>
+
           </Grid>
 
-          <div>
+          <Grid>
             {pokemonDetail?.stats?.map((pokemon) => {
               return (
                 <>
@@ -61,16 +89,16 @@ const PokemonDetailsPage = () => {
                 </>
               );
             })}
-          </div>
-          <div >
+          </Grid>
+          <Grid >
             <Typography style={{ color: '#CFF5E7', fontWeight: "bold" }}>ABILITIES</Typography>
             {pokemonDetail?.abilities?.map((poke) => {
               return (
                 <Typography style={{ color: '#CFF5E7' }} >{poke.ability.name}</Typography>
               );
             })}
-          </div>
-        </div>
+          </Grid>
+        </Grid>
 
         <Button variant="contained" sx={{ m: 2, backgroundColor: "#478976", '&:hover': { backgroundColor: "#478976" }, }} onClick={() => { showDialog() }}  >Catch Pokemon</Button>
 

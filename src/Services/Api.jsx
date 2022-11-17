@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setPokemons } from "../Redux/PokemonSlice";
+import { setPokemons, setPokemonMove } from "../Redux/PokemonSlice";
 
 // Axios Base URL
 const baseURL = process.env.REACT_APP_BASE_URL ?? "https://pokeapi.co/api/v2";
@@ -32,3 +32,10 @@ const fetchPokemonsDetails = async (list, dispatch) => {
     }
   });
 };
+
+export const fetchPokemonMoves = (id) => {
+  return async (dispatch) => {
+    return await axios.get(`${baseURL}/move/${id}/`)
+      .then(res => { dispatch(setPokemonMove(res.data)) });
+  }
+}
