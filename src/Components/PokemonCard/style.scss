@@ -11,12 +11,12 @@
 
 .Details-card {
   width: auto;
-  background-color: #478976;  
+  background-color: #478976;
   padding: 0 10rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 600px;
+  height: auto;
   box-sizing: border-box;
   margin: 10px;
 }
@@ -28,5 +28,10 @@
   justify-content: space-between;
   box-sizing: border-box;
   margin: 20px;
-  
+
+}
+
+.photo {
+  height: 150px;
+  width: 150px;
 }

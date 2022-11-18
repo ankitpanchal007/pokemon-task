@@ -12,13 +12,33 @@ const PokemonDetailsPage = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [nickname, setNickname] = useState("");
-
+  const [image, setImage] = useState("");
+  const [index, setIndex] = useState(0);
 
   const { pokemonDetail } = useSelector((state) => state.PokemonReducer);
+
   useEffect(() => {
     dispatch(fetchPokemonMoves(pokemonDetail.id));
   }, []);
+
   const { pokemonMove } = useSelector((state) => state.PokemonReducer);
+
+  let movingImages = (pokemonDetail.sprites);
+  let movingImageValue = (Object.values(movingImages).slice(0, 7));
+
+  useEffect(() => {
+    setInterval(() => {
+      if (index === 6) {
+        setIndex(() => 0);
+        setImage(() => movingImageValue[index]);
+      }
+      else {
+        setIndex(() => index + 2);
+        setImage(() => movingImageValue[index]);
+      }
+    }, 3000);
+  }, [index]);
+
   const navigate = useNavigate();
 
   const HandleOnClick = (pokemonDetail) => {
@@ -35,7 +55,10 @@ const PokemonDetailsPage = () => {
   };
 
   const showDialog = () => {
-    setOpen(true);
+    if (image === pokemonDetail?.sprites?.front_default) {
+      setOpen(true);
+    }
+
   };
 
   const closeDialog = () => {
@@ -54,8 +77,16 @@ const PokemonDetailsPage = () => {
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonDetail.id}.svg`} alt=""
             />
+            <img
+              src={pokemonDetail?.sprites?.front_default} alt=""
+            />
             <Grid>
-              <img
+
+              <img className="photo"
+                src={image} alt="">
+              </img>
+
+              {/* <img
                 src={pokemonDetail?.sprites?.back_default} alt=""
               />
               <img
@@ -66,15 +97,17 @@ const PokemonDetailsPage = () => {
               />
               <img
                 src={pokemonDetail?.sprites?.front_shiny} alt=""
-              />
+              /> */}
+
+
             </Grid>
             <Grid>
               <Typography sx={{ color: '#CFF5E7', fontSize: 34, fontWeight: "medium" }}>
                 {pokemonDetail.name}
               </Typography>
               <Typography sx={{ color: '#CFF5E7', fontSize: 22 }}>
-               Move - {pokemonMove?.name}, Accuracy - {pokemonMove?.accuracy}
-               </Typography>
+                Move - {pokemonMove?.name}, Accuracy - {pokemonMove?.accuracy}
+              </Typography>
             </Grid>
 
           </Grid>
@@ -111,7 +144,7 @@ const PokemonDetailsPage = () => {
           open={open}
           onClose={() => { closeDialog() }}
         >
-          <DialogTitle>Enter nickname for Caught pokemon</DialogTitle>
+          <DialogTitle>Enter nickname for caught pokemon</DialogTitle>
 
           <Grid container direction={"row"} sx={{ padding: "25px" }}>
             <TextField sx={{ width: "100%", mb: 3 }} placeholder="Enter nickname" onChange={e => { setNickname(e.target.value) }}></TextField>
